@@ -1,2 +1,3 @@
-# por-mis-huevos
+# Proyecto "por mis huevos"
+
 Incubadora de huevos basada en Arduino
