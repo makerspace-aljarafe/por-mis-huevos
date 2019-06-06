@@ -1,7 +1,14 @@
 #include <DHT_U.h>
 #include <DHT.h>
 
-
+/**
+ * Constants
+ */
+  
+#define TEMPERATURE 1
+#define HUMIDITY 2
+#define SWING 3
+    
 /*
  * 
 
@@ -33,8 +40,41 @@ class IncubatorHardware {
     void getHumidity() {}
 };
 
-class IncubationProgramme {
+class HardwareEvent {
+  private:
+    int type;
+    double value;
+    
+  public:
+    HardwareEvent(int type, double value) {
+      this->type = type;
+      this->value = value;
+    }
+
+    String getInfo() {
+      switch(this->type) {
+        case TEMPERATURE:
+          return "TEMPERATURE";
+          break;
+        case HUMIDITY:
+          return "HUMIDITY";
+          break;
+        case SWING:
+          return "SWING";
+          break;
+      }
+    }
+   
 };
+
+class IncubationProgramme {
+  public:
+
+    String getProgrammeInfo() {}
+};
+
+class IncubationProgrammeTest {};
+class IncubationProgrammeChicken {};
 
 class Incubator {
   private:
@@ -60,6 +100,10 @@ class Incubator {
 IncubationProgramme ip;
 IncubatorHardware ih;
 Incubator incu(ih, ip);
+HardwareEvent ev1(TEMPERATURE, 12.3);
+HardwareEvent ev2(HUMIDITY, 80.0);
+HardwareEvent ev3(SWING, 0);
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -71,6 +115,11 @@ void setup() {
 }
 
 void loop() {
+Serial.print(ev1.getInfo());
+Serial.print(ev2.getInfo());
+Serial.print(ev3.getInfo());
+
+
 /*
   t1 = dht.readTemperature();
 
