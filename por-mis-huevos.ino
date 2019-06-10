@@ -1,5 +1,9 @@
+// Necessary for the temperature sensors
 #include <DHT_U.h>
 #include <DHT.h>
+
+// For the task manager
+#include <IoAbstraction.h>
 
 /**
  * Constants
@@ -64,7 +68,7 @@ class HardwareEvent {
           break;
       }
     }
-   
+  
 };
 
 class IncubationProgramme {
@@ -94,6 +98,9 @@ class Incubator {
     void getInfo() {}
 };
 
+void onTimer() {
+        Serial.println("hola hola\n");
+}
 
 
 
@@ -105,9 +112,13 @@ HardwareEvent ev2(HUMIDITY, 80.0);
 HardwareEvent ev3(SWING, 0);
 
 
+
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  uint8_t taskId = taskManager.scheduleOnce(3000, onTimer);
+
   //dht.begin();
   //dht2.begin();
 
@@ -115,11 +126,7 @@ void setup() {
 }
 
 void loop() {
-Serial.print(ev1.getInfo());
-Serial.print(ev2.getInfo());
-Serial.print(ev3.getInfo());
-
-
+  taskManager.runLoop();
 /*
   t1 = dht.readTemperature();
 
