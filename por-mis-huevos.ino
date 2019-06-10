@@ -5,6 +5,11 @@
 // For the task manager
 #include <IoAbstraction.h>
 
+
+// LCD library
+#include <LiquidCrystal.h>
+
+
 /**
  * Constants
  */
@@ -103,7 +108,9 @@ void onTimer() {
 }
 
 
-
+/*
+ * Global initializations
+ */
 IncubationProgramme ip;
 IncubatorHardware ih;
 Incubator incu(ih, ip);
@@ -111,7 +118,8 @@ HardwareEvent ev1(TEMPERATURE, 12.3);
 HardwareEvent ev2(HUMIDITY, 80.0);
 HardwareEvent ev3(SWING, 0);
 
-
+// initialize the library with the numbers of the interface pins
+LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 
 
 void setup() {
@@ -123,6 +131,11 @@ void setup() {
   //dht2.begin();
 
   //pinMode(RELAY, OUTPUT);
+
+  // set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  // Print a message to the LCD.
+  lcd.print("Por mis huevos");
 }
 
 void loop() {
